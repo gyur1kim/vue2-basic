@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    <p>아이스크림이 죽었다. 그 이유는?</p>
+    <div>
+      <button v-on:click="clickBtn">답 보기</button> : 
+      <span v-show="isActive">차가와서</span>
+    </div>
+  </div>
+
+  <hr>
+
+  <div id="app2">
+    <a v-bind:href="url">구글로 가기</a>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+  <script>
+    const app = new Vue({
+      el: '#app',
+      data: {
+        isActive: false,
+      },
+      methods: {
+        clickBtn: function(){
+          this.isActive = !this.isActive;
+        }
+      }
+    })
+
+    const app2 = new Vue({
+      el: '#app2',
+      data: {
+        url: 'https://www.google.com/'
+      }
+    })
+  </script>
+</body>
+</html>

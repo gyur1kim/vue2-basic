@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    <div v-for="num in oddNums">
+      <p>{{ num }}</p>
+    </div>
+  </div>
+
+
+  <!-- 
+    computed를 활용해 nums의 홀수만 출력하기
+   -->
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script>
+    const app = new Vue({
+      el: '#app',
+      data: {
+        nums : [1, 2, 3, 4, 5, 6]
+      },
+      computed: {
+        oddNums: function(){
+          const oddNums = [];
+          for(num of this.nums){
+            if (num%2){
+              oddNums.push(num);
+            }
+          }
+          return oddNums
+          
+          // return this.nums.filter(num => num%2)
+        }
+      }
+    })
+  </script>
+</body>
+</html>
