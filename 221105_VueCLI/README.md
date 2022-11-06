@@ -104,9 +104,86 @@ node.js → vue 프로젝트를 생성 (서버 사이드)
 - 재사용과 유지보수 → 확장 가능, 독립적
 - **이름**이 있는 **재사용** 가능한 **Vue Instance**, **`new Vue()`로 만든 인스턴스**
 
-
 📢 컴포넌트들이 **tree구조, root**에 해당하는 것이 **App.vue**
 
        App.vue가 **index.html**과 연결된다, 결국 이 **index.html만 렌더링**하는 것임
 
 
+
+# Vue CLI 실습
+
+## Component 생성하기
+
+1. `src/components/` 내부에 **vue파일 생성**
+   
+   이 때, vue component는 PascalCase로 작성할 것
+
+2. **script**에 **이름 등록**
+   
+   `name: ‘파일 이름’`
+
+3. **template**에 **요소 추가**
+   
+   이때, 반드시 **root 태그**가 한 개만 존재해야 한다.
+
+```jsx
+<template>
+  <!-- 템플릿에 요소 추가 -->
+  <div>
+    <h1>이것은 MyComponent입니다.</h1>
+  </div>
+</template>
+
+<script>
+export default {
+  // script에 이름 등록
+  name: 'MyComponent'
+}
+</script>
+
+<style>
+</style>
+```
+
+## Component 등록하기
+
+1. **불러오기**
+   
+   상위 component의 script 내부에 **import**해야 함.
+   
+   `import {instance name} from {위치}`
+   
+   - 상대경로 `.` 을 절대경로 `@` 로 적을 수 있음(shortcut)
+   - 파일 이름의 `.vue` 생략 가능
+
+2. **등록**하기
+
+3. 보여주기
+   
+   태그의 이름처럼 사용할 수 있음
+
+```jsx
+<template>
+  <div id="app">
+      <!-- 컴포넌트 보여주기 -->
+    <MyComponent />
+  </div>
+</template>
+
+<script>
+// 아래 둘은 같은 내용이다
+import MyComponent from './components/MyComponent.vue';
+import MyComponent from '@/components/MyComponent';
+
+export default {
+  name: 'App',
+  components: {
+        // 컴포넌트 등록하기
+    MyComponent,
+  }
+}
+</script>
+
+<style>
+</style>
+```
