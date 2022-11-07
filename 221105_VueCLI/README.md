@@ -30,8 +30,6 @@ node.js → vue 프로젝트를 생성 (서버 사이드)
    
    하지만 package.json에 필요한 모듈 정보가 다 들어있기 때문에 그냥 `npm install` 하면 됨
 
-
-
 # Vue CLI 프로젝트 구조
 
 ## node_modules
@@ -88,8 +86,6 @@ node.js → vue 프로젝트를 생성 (서버 사이드)
 - `App.vue` : 최상위 컴포넌트, public.html과 연결됨
 - `main.js` : webpack이 빌드를 시작할 때 가장 먼저 불러오는 entry point **index.html**과 **App.vue**를 **연결**시키는 작업이 이루어지는 곳
 
-
-
 # SFC
 
 > **Single File Component**
@@ -107,8 +103,6 @@ node.js → vue 프로젝트를 생성 (서버 사이드)
 📢 컴포넌트들이 **tree구조, root**에 해당하는 것이 **App.vue**
 
        App.vue가 **index.html**과 연결된다, 결국 이 **index.html만 렌더링**하는 것임
-
-
 
 # Vue CLI 실습
 
@@ -187,3 +181,88 @@ export default {
 <style>
 </style>
 ```
+
+## Component들의 데이터 교환
+
+component들은 독립적인데 **어떻게 같은 데이터**를 공유하는가?
+
+⇒ 컴포넌트들끼리 데이터를 주고받자!
+
+- **부모 → 자식** : `pass props`
+- **자식 → 부모** : `emit event`
+
+### pass props
+
+- 요소의 **속성(property)**을 사용하여 데이터 전달, 요소에 속성을 작성하듯이 사용 가능
+
+- 자식은 **props 옵션을 사용**하여 수신하는 **props를 명시적으로 선언**해야 한다
+1. **정적인 데이터, static props**
+   
+   - `prop-data-name=”value”` 형태로 데이터 전달(**kebab-case**)
+   - 자식은 **camelCase**로 props를 전달받는다, **type을 명시**해야 한다
+   
+   ```jsx
+   // 부모 vue : 속성을 작성하듯 데이터를 작성한다.
+   <template>
+    <div id="myComponent">
+      <MyComponentChild parent-static-data="부모->자식 정적데이터" />
+    </div>
+   </template>
+   
+   // 자식 vue : props에 등록 후 사용
+   <template>
+    <div id="myComponentChild">
+      <p>{{ parentStaticData }}</p>
+    </div>
+   </template>
+   
+   <script>
+   export default {
+    props: {
+      parentStaticData: String,
+    }
+   }
+   </script>
+   ```
+
+2. **동적인 데이터, dynamic props**
+   
+   - `v-bind directive` 를 사용해 데이터를 동적으로 바인딩
+   
+   ```jsx
+   // 부모 vue : 데이터를 v-bind(**:**)를 이용해 전달
+   <template>
+    <div id="myComponent">
+      <MyComponentChild :parent-dynamic-data="parentDynamicData" />
+    </div>
+   </template>
+   
+   <script>
+   export default {
+      data(){
+        return{
+          parentDynamicData: "부모->자식 동적데이터"
+        }
+      }
+   }
+   </script>
+   
+   // 자식 vue : props에 등록 후 사용
+   <template>
+    <div id="myComponentChild">
+      <p>동적 데이터 : {{ parentDynamicData }}</p>
+    </div>
+   </template>
+   
+   <script>
+   export default {
+    props: {
+      parentDynamicData: String,
+    }
+   }
+   </script>
+   ```
+
+**참조) data를 왜 return 안에 넣는거야?**
+
+⇒ 각 vue 인스턴스는 **같은 data 객체를 공유**하므로, **새로운 data 객체를 반환**하여 사용해야 한다.
