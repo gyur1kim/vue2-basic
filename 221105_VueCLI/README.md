@@ -266,3 +266,107 @@ component들은 독립적인데 **어떻게 같은 데이터**를 공유하는�
 **참조) data를 왜 return 안에 넣는거야?**
 
 ⇒ 각 vue 인스턴스는 **같은 data 객체를 공유**하므로, **새로운 data 객체를 반환**하여 사용해야 한다.
+
+### emit event
+
+- **이벤트를 발생**시키자!!
+  
+  ⇒ 자식의 **데이터**를 **이벤트 리스너**의 **콜백함수의 인자**로 전달
+  
+  ⇒ 상위 컴포넌트는 해당 이벤트를 통해 **데이터를 받음**
+
+- `$emit`
+  
+  - `$emit 메서드`를 통해 부모 컴포넌트에 **이벤트를 발생시킨다**
+  - `$emit('event-name')` 형식으로 사용
+  - 부모 컴포넌트에 `event-name` 이벤트가 발생했다는 것을 알림
+1. **정적인 데이터, static data**
+   
+   - **자식 컴포넌트**의 methods에서 `$emit('이벤트 이름', '데이터')` 를 통해 **이벤트를 발생**시킨다.
+   - 부모 컴포넌트에서 **해당하는 이름의 이벤트**가 발생하면( `v-on` ) **메서드를 실행**한다
+   - 메서드의 매개변수로 **데이터**를 받는다.
+   
+   ```javascript
+   // 자식 vue : 이벤트 발생시킴
+   <template>
+    <div id="myComponentChild">
+     <button @click="childToParent">부모에게 이벤트 발생시키기</button>
+    </div>
+   </template>
+   
+   <script>
+   export default {
+    methods: {
+      childToParent(){
+        this.$emit('child-to-parent', '자식->부모 정적 데이터');
+      }
+    }
+   }
+   </script>
+   
+   // 부모 vue : 이벤트가 발생하면 데이터를 가지고 메서드 실행
+   <template>
+    <div id="myComponent">
+     <MyComponentChild @child-to-parent="parentGetStaticData" />
+    </div>
+   </template>
+   
+   <script>
+   export default {
+    methods: {
+      parentGetStaticData(data){
+        const staticData = document.createElement('div');
+        staticData.innerText = data;
+        document.querySelector('#myComponent').appendChild(staticData);
+      }
+    }
+   }
+   </script>
+   ```
+
+2. **동적인 데이터, dynamic props**
+   
+   - 위의 과정과 동일, 데이터를 동적으로 관리할 뿐
+   
+   ```javascript
+   // 자식 vue : 이벤트 발생시킴
+   <template>
+    <div id="myComponentChild">
+     <button @click="childToParentDynamic">부모에게 동적 이벤트 발생시키기</button>
+    </div>
+   </template>
+   
+   <script>
+   export default {
+    data(){
+      return{
+        num: 0,
+      }
+    },
+    methods: {
+      childToParentDynamic(){
+        this.$emit('child-to-parent-dynamic', this.num++);
+      }
+    }
+   }
+   </script>
+   
+   // 부모 vue : 이벤트가 발생하면 데이터를 가지고 메서드 실행
+   <template>
+    <div id="myComponent">
+     <MyComponentChild @child-to-parent-dynamic="parentGetDynamicData" />
+    </div>
+   </template>
+   
+   <script>
+   export default {
+    methods: {
+      parentGetDynamicData(data){
+        const dynamicData = document.createElement('div');
+        dynamicData.innerText = data;
+        document.querySelector('#myComponent').appendChild(dynamicData);
+      }
+    }
+   }
+   </script>
+   ```

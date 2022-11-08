@@ -5,6 +5,9 @@
     <MyComponentChild 
       parent-static-data="부모->자식 정적데이터" 
       :parent-dynamic-data="parentDynamicData"
+
+      @child-to-parent-static="parentGetStaticData"
+      @child-to-parent-dynamic="parentGetDynamicData"
     />
   </div>
 </template>
@@ -21,6 +24,18 @@ export default {
   data(){
     return{
       parentDynamicData: "부모->자식 동적데이터"
+    }
+  },
+  methods: {
+    parentGetStaticData(data){
+      const staticData = document.createElement('div');
+      staticData.innerText = data;
+      document.querySelector('#myComponent').appendChild(staticData);
+    },
+    parentGetDynamicData(data){
+      const dynamicData = document.createElement('div');
+      dynamicData.innerText = data;
+      document.querySelector('#myComponent').appendChild(dynamicData);
     }
   }
 }
