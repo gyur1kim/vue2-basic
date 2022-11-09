@@ -1,22 +1,27 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import createPersistedState from 'vuex-persistedstate'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
+  plugins: [
+    createPersistedState(),
+  ],
   state: {
-    todos: [
-      {
-        title: '할 일 1',
-        isCompleted: false,
-      },
-      {
-        title: '할 일 2',
-        isCompleted: false,
-      },
-    ]
+    todos: []
   },
   getters: {
+    todosCountAll(state){
+      return state.todos.length;
+    },
+    todosCountDone(state){
+      const doneTodos = state.todos.filter((todo)=>todo.isCompleted)
+      return doneTodos.length;
+    },
+    todosCountYet(state, getter){
+      return getter.todosCountAll - getter.todosCountDone;
+    }
   },
   mutations: {
     CREATE_TODO(state, todoTitle){

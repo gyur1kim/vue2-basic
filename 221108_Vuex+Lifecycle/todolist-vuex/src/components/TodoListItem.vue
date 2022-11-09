@@ -1,8 +1,10 @@
 <template>
   <div id="todoItem">
-    <span>{{ todo.title }}</span>
-    <button @click="updateIsCompleted">✅</button>
-    <button @click="deleteTodo">❎</button>
+    <div :class="{ 'is-completed': todo.isCompleted }">{{ todo.title }}</div>
+    <div class="btn">
+      <button @click="updateIsCompleted">✅</button>
+      <button @click="deleteTodo">❎</button>
+    </div>
   </div>
 </template>
 
@@ -24,4 +26,8 @@ export default {
 </script>
 
 <style>
+.is-completed{
+  text-decoration: line-through;
+  color: gray;
+}
 </style>

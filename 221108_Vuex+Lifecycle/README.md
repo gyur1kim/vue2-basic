@@ -193,3 +193,104 @@ updated(){
    → `updated()` 실행
 
 4. axios 종료!
+
+
+
+# Vuex를 이용한 todoList
+
+## 1. CRUD - Read
+
+1. todo는 **object 형태**로 저장 - isCompleted, title 요소를 가진다
+   
+   이것들은 **todos의 배열**에 저장( `vuex - state` )
+
+2. **todos**는 **for문**을 돌려 ListItem의 **props**로 보내자!
+
+3. ListItem 에서는 **props**로 받은 **todo의 title값**을 출력하자
+
+## 2. CRUD - Create
+
+1. form에서 **작성**한 내용을 저장해야 함! → `v-model` 과 `@keyup.enter` 이용하기
+
+2. 저장한 내용을 **state**에 업데이트 하기!!
+   
+   `actions → mutations` 로 가도 되지만, 비동기적인 과정이 없기 때문에 바로 `commit()` 메서드를 통해 **mutations**로 감!
+
+## 3. CRUD - Delete
+
+1. 각 TodoItem에 삭제 버튼 달아주기, 삭제 버튼을 누르면 삭제 메서드 실행(바로 `mutations` 로 가보자고!)
+   
+   이 때, payload로 버튼이 눌린 컴포넌트의 todo를 보내줘야 함!!
+
+2. todo의 **index**를 **찾아**야 한다! `indexOf()` 메서드를 활용하자
+   
+   - `indexOf()` : 배열에서 지정된 요소를 찾을 수 있는 첫 번째 인덱스를 반환
+   - `findIndex()` : 콜백 함수를 만족하는 배열의 첫 번째 요소에 대한 인덱스를 반환
+
+3. index를 찾았으면 그 부분만 배열에서 잘라내기
+   
+   ```jsx
+   state.todos.splice(idx, 1);
+   ```
+   
+   - `splice()` : 배열의 **기존 요소**를 **삭제** 또는 **교체**하거나 새 요소를 **추가**하여 **배열**의 **내용**을 **변경**(배열을 반환하지 않음)
+   - `slice()` : 배열의 **start**부터 **end이전**까지 **얕은 복사본**을 새로운 **배열 객체**로 반환(원본 배열은 변경되지 않음)
+
+## 4. CRUD - Update
+
+1. 할 일 완료 버튼 생성, 클릭하면 updateCompleted 메서드 실행 → mutations로 바로 가자
+
+2. todos에서 todo에 해당하는 인덱스를 찾은 뒤, 그 todo의 isCompleted를 반대로 바꿔준다.
+
+3. 완료된 값에 취소선을 긋기 위해서는 `v-bind class` 를 이용한다!!
+   
+   `:class={"condition'}` 조건식을 사용하면 원하는 클래스 명을 추가하거나 제거할 수 있음.
+   
+   조건식이 true이면 클래스를 적용고, 그렇지 않으면 클래스를 적용하지 않음
+   
+   ```jsx
+   <div :class="{ 'is-completed': todo.isCompleted }">{{ todo.title }}</div>
+   ```
+
+### 그밖에
+
+1. **총 할 일의 개수와 남은 할 일의 개수 출력하기**
+   
+   1. `computed` 와 `getters` 이용하기
+
+2. **브라우저를 껐다 켜도 todos 유지하기**
+   
+   ⇒ **local storage** 사용하기
+
+## Local Storage
+
+> 브라우저에서 제공하는 저장공간
+> 
+> 브라우저를 종료하고 다시 실행해도 **데이터가 보존**됨!
+
+- `window.localStorage`
+
+- 데이터 저장 : `setItem(key, value)`
+
+- 데이터 조회 : `getItem(key)`
+
+- 데이터가 **문자열 형태**로 저장됨!!!
+  
+  ⇒ **json 파일**을 **문자열**로 변환 **:** `JSON.stringify()`
+  
+  ⇒ **문자열**을 **json 파일**로 변환 : `JSON.parse()`
+
+### vue-persistedstate
+
+- 기존 : `setItem` 과 `getItem` 을 이용해 데이터를 저장
+
+- vue state를 **자동**으로 브라우저의 local storage에 **저장**해주는 **라이브러리** 존재
+1. 설치
+   
+   `npm install vuex-persistedstate`
+
+2. 적용
+   
+   `import createPersistedState from 'vue-persistedstate'` / index.js **최상단**에 작성
+   
+   `plugins: [ createPersistedState(), ]` / index.js **store 내부**에 작성
