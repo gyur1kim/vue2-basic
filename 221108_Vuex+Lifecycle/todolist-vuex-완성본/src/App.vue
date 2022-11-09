@@ -2,8 +2,8 @@
   <div id="app">
     <h1>Todo List</h1>
     <TodoList />
-
     <TodoForm />
+    <!-- <button @click="loadTodos">Todo 불러오기</button> -->
   </div>
 </template>
 
@@ -17,6 +17,11 @@ export default {
     TodoList,
     TodoForm,
   },
+  methods: {
+    // loadTodos(){
+    //   this.$store.dispatch('loadTodos')
+    // }
+  }
 }
 </script>
 

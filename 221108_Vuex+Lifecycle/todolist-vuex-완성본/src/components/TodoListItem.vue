@@ -18,10 +18,10 @@ export default {
   },
   methods: {
     deleteTodo(){
-      this.$store.commit('DELETE_TODO', this.todo)
+      this.$store.dispatch('deleteTodo', this.todo);
     },
     updateTodoStatus(){
-      this.$store.commit('UPDATE_TODO_STATUS', this.todo)
+      this.$store.dispatch('updateTodoStatus', this.todo);
     }
   }
 }
