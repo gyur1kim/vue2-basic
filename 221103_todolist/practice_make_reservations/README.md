@@ -1,24 +1,17 @@
-# practice_make_reservations
-
-## Project setup
-```
-npm install
-```
-
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+# 문제
+## 상담 예약시간 버튼 박스 제작하기
+- 완성 예시를 참고하여 다음의 요구 사항을 반영한 Vue Application을 제작한다.
+- 5타임 이상 클릭할 시 경고 모달창 띄울 것
+- 키 컬러들
+  - #0F4C81, #658DC63D, #84898C, #424242(전체 글씨 색상)
+## 요구 사항
+- Noto Sans Korean 구글 폰트를 활용합니다
+- App.vue
+  - h1 태그로 버튼 박스 제작 대제목을 작성합니다.
+  - h2 태그로 예약페이지 중제목을 작성합니다.
+  - h3 태그로 시간 선택 소제목을 작성합니다.
+  - 시간 선택 화면은 09:00부터 30분 단위로 23:30까지 배치합니다.
+    - 버튼을 클릭하는 경우 배경 색상이 변경됩니다.
+    - 버튼을 클릭하는 경우 해당 시간에 대한 정보가 배열에 담기게 됩니다.
+    - 선택한 버튼을 다시 클릭하는 경우 배경 색상이 제거되며, 배열에서 해당 시간도 삭제되게 됩니다.
+    - 5타임 이상은 신청할 수 없습니다.
