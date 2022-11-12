@@ -1,10 +1,8 @@
 <template>
-  <span 
-    @click="checkSelected"
-    @mouseover="changeCursor"
-  >
-    {{ time }}
-  </span>
+  <span
+    class="time"
+    @click="isSelected"
+  >{{ time }}</span>
 </template>
 
 <script>
@@ -15,26 +13,28 @@ export default {
     selectedTimes: Array,
   },
   methods: {
-    checkSelected: function(){
-      const idx = this.selectedTimes.indexOf(this.time);
-      console.log(this.selectedTimes);
-      if(idx !== -1){
-        if(this.selectedTimes.length > 5){
-          alert('최대 5개까지만 누르세요');
-        }
+    isSelected(e){
+      if (this.selectedTimes.includes(this.time)){
+        this.$emit('delete-selected', this.time);
+        e.target.style.backgroundColor = 'white';
       }
       else{
-        console.log('없는걸 선택함');
-        this.$emit('select-new-time', this.time);
+        if(this.selectedTimes.length === 5){
+          alert('시간은 최대 5개까지 선택 가능합니다.');
+        }
+        else{
+          this.$emit('push-selected', this.time);
+          e.target.style.backgroundColor = '#E0F1FF';
+        }
       }
-    },
-    // changeCursor: function(){
-    //   document.getElementsByTagName('span').style.cursor = "pointer";
-    // }
+    }
   },
 }
 </script>
 
 <style>
-
+.time {
+  cursor: pointer;
+  color: #84898C
+}
 </style>

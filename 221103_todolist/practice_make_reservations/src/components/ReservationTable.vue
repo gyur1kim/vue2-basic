@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>예약 페이지</h1>
+    <h2>예약 페이지</h2>
     <h3>시간 선택</h3>
     <div>
       <ReservationTableTime 
@@ -8,7 +8,8 @@
         :key="index" 
         :time="time" 
         :selectedTimes="selectedTimes" 
-        @select-new-time="selectNewTime"
+        @delete-selected="deleteSelected"
+        @push-selected="pushSelected"
       />
     </div>
   </div>
@@ -27,8 +28,11 @@ export default {
     selectedTimes: Array,
   },
   methods: {
-    selectNewTime: function(timeData){
-      this.$emit('select-new-time', timeData);
+    deleteSelected(time){
+      this.$emit('delete-selected', time);
+    },
+    pushSelected(time){
+      this.$emit('push-selected', time);
     }
   }
 }
