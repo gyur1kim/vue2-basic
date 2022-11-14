@@ -8,4 +8,6 @@ vue.js를 공부한 내용을 정리했습니다!
 
 - 221108 : [vuex + lifecycle hooks, todolist 실습](https://github.com/gyur1kim/vue2-basic/tree/master/221108_Vuex%2BLifecycle)
 
+- 221109 : [Vue Router, Navigation Guard, 404 Not Found](https://github.com/gyur1kim/vue2-basic/tree/master/221109_VueRouter)
+
 
