@@ -136,3 +136,41 @@ data(){
    ```jsx
    component: () => import('../views/AboutView.vue')
    ```
+
+
+
+# Navigation Guard
+
+- 사용자가 url로 redirect하거나 **접근하는 것을 막는** 방법!
+- **전역 가드** : 애플리케이션 전역에서 동작
+- **라우터 가드** : 특정 URL에서만 동작
+- **컴포넌트 가드** : 라우터 컴포넌트 안에 정의
+
+## 전역 가드
+
+- 다른 url 주소로 이동할 때 **항상 실행(전체 route)**
+
+- `router/index.js` 폴더 내부 가장 아래 작성, `router.beforeEach()`
+
+- `beforeEach` 메서드의 인자 - `to` , `from` , `next`
+  
+  **to -**내가 갈 URL 정보가 담긴 Route 객체
+  
+  **from** - 현재 URL 정보가 담긴 Route 객체
+  
+  **next()** - 지정한 URL로 이동하기 위해 호출하는 함수 `next({ name: '이동할 페이지 이름' })` , **인자가 없으면** **to로 이동**함
+  반드시 한 번만 호출하고, **next()를 호출**해야 **화면이 전환됨**
+
+## 라우터 가드
+
+- **특정 라우트**에 대해서만 가드를 설정
+- `router/index.js` 의 routes에서 해당 route에 작성함 , `beforeEnter()`
+- 라우트에 **진입**했을 때 실행됨(동일한 컴포넌트 내에서 값이 변경되는 것은 실행X, 다른 경로에서 탐색할 때**만** 실행)
+- `beforeEnter` 메서드의 인자는 `to` , `from` , `next`
+
+## 컴포넌트 가드
+
+- 특정 컴포넌트 내에서 가드를 지정하고 싶을 때 사용
+- 해당 컴포넌트 내에 `beforeRouteUpdated()` 작성
+- 해당 컴포넌트를 **렌더링하는 경로가 변경될 때** 실행
+- params는 변하는데 컴포넌트는 그대로여서 **렌더링을 못해줌**
