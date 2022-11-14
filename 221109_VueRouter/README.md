@@ -137,8 +137,6 @@ data(){
    component: () => import('../views/AboutView.vue')
    ```
 
-
-
 # Navigation Guard
 
 - 사용자가 url로 redirect하거나 **접근하는 것을 막는** 방법!
@@ -174,3 +172,43 @@ data(){
 - 해당 컴포넌트 내에 `beforeRouteUpdated()` 작성
 - 해당 컴포넌트를 **렌더링하는 경로가 변경될 때** 실행
 - params는 변하는데 컴포넌트는 그대로여서 **렌더링을 못해줌**
+
+
+
+# 404 Not Found
+
+> 사용자가 **요청한 리소스**가 **존재하지 않을 때** 응답코드 **404**
+
+### 요청하지 않는 리소스가 존재하는 경우
+
+1. 기존의 경로가 아닌 **모든 경로**에 대해서 **404 page**로 **redirect** 시키기!
+   
+   - 기존에 명시한 경로가 아닌 모든 경로가 404 page로 redirect됨
+   - routes의 **최하단부**에 작성할 것!
+   
+   ```jsx
+   const routes = [
+      ...
+      {
+          path: '/404',
+          name: 'NotFound404',
+          component: NotFound404,
+      }
+      {
+          path: '*',
+          redirect: '/404',
+      }
+   ]
+   ```
+
+2. **형식은 유효**하지만 **리소스를 찾을 수 없는 경우**
+   
+   - 데이터가 없음을 명시하고 404 page로 이동해야 함!
+   
+   - **axios** : `catch()` 에서 404 페이지로 이동시키기!
+     
+     ```jsx
+     catch((error)=>{
+        this.$router.push('/404');
+     })
+     ```
